@@ -24,7 +24,7 @@ const ListAll = (props) => {
         
         <div>
             <div>
-                <p className="linkToRight"><Link to ={"/experiment"}>&#65291; Experiment</Link></p>
+                <button className="linkToRight"><Link to ={"/experiment"}>Add Experiment</Link></button>
                 <table>
                     <thead>
                     <th>Name </th>
