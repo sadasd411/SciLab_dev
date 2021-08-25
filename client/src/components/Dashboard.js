@@ -3,16 +3,21 @@ import{Link,navigate, Router} from '@reach/router';
 import axios from 'axios'
 
 
-const ListAll = (props) => {
+const Dashboard = (props) => {
     const [allExperiments, setAllExperiments] = useState([]);
     
     
-    
+    const allStatus = [
+        "New Request",
+        "In Queue",
+        "In Process",
+        "Completed"
+    ]
 
     useEffect(() =>{
         axios.get("http://localhost:8000/api/experiments")
         .then((res) =>{
-            console.log(res.data);
+            console.log(res.data)
             setAllExperiments(res.data);
            
                    })
@@ -24,27 +29,24 @@ const ListAll = (props) => {
         
         <div>
             <div>
-                <button className="linkToRight"><Link to ={"/experiment"}>Add Experiment</Link></button>
+                <p>Assigned To me | All</p>
+
                 <table>
                     <thead>
                     <th>Experiment Name </th>
-                    <th>Experiment Description</th>
-                    <th>Actions avaiable</th>
+                    <th>Experiment Staus</th>
                     </thead>
                     <tbody>
                     { allExperiments.map((experiment,index) => (
-                        <tr>
+                        <tr >
                             <td>
-                            {experiment.experimentName}
+                            <Link to ={`/experiment/${experiment._id}`}>{experiment.experimentName} </Link>
                              </td>
                              <td>
-                              {experiment.experimentDescription}
+                                 {allStatus[0]}
+                              {/* {experiment.experimentDescription} */}
                              </td>
-                            <td>
-                            <Link to ={`/experiment/${experiment._id}`}>details </Link>
-                            <span>|</span>
-                            <Link to ={`/experiment/${experiment._id}/edit`}> edit</Link>
-                            </td>
+                            
                         </tr>
                 ))}
                             
@@ -53,4 +55,4 @@ const ListAll = (props) => {
             </div>
         </div>)
 }
-export default ListAll;
+export default Dashboard;

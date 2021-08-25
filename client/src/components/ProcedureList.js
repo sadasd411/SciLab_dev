@@ -3,17 +3,17 @@ import{Link,navigate, Router} from '@reach/router';
 import axios from 'axios'
 
 
-const ListAll = (props) => {
-    const [allExperiments, setAllExperiments] = useState([]);
+const ListAllProcedure = (props) => {
+    const [allProcedures, setAllProcedures] = useState([]);
     
     
     
 
     useEffect(() =>{
-        axios.get("http://localhost:8000/api/experiments")
+        axios.get("http://localhost:8000/api/procedures/")
         .then((res) =>{
             console.log(res.data);
-            setAllExperiments(res.data);
+            setAllProcedures(res.data);
            
                    })
         .catch((err) =>
@@ -24,26 +24,25 @@ const ListAll = (props) => {
         
         <div>
             <div>
-                <button className="linkToRight"><Link to ={"/experiment"}>Add Experiment</Link></button>
+                {/* <button className="linkToRight"><Link to ={"/experiment"}>Add Experiment</Link></button> */}
                 <table>
                     <thead>
-                    <th>Experiment Name </th>
-                    <th>Experiment Description</th>
+                    <th>Procedure Name </th>
                     <th>Actions avaiable</th>
                     </thead>
                     <tbody>
-                    { allExperiments.map((experiment,index) => (
+                    { allProcedures.map((procedure,index) => (
                         <tr>
                             <td>
-                            {experiment.experimentName}
+                            {procedure.procedureName}
                              </td>
-                             <td>
-                              {experiment.experimentDescription}
-                             </td>
+                             
                             <td>
-                            <Link to ={`/experiment/${experiment._id}`}>details </Link>
+                            <Link to ={`/procedure/${procedure._id}`}>details </Link>
                             <span>|</span>
-                            <Link to ={`/experiment/${experiment._id}/edit`}> edit</Link>
+                            <Link to ={`/procedure/${procedure._id}/edit`}> edit</Link>
+                            <span>|</span>
+                            <Link to ={`/procedure/`}> add</Link>
                             </td>
                         </tr>
                 ))}
@@ -53,4 +52,4 @@ const ListAll = (props) => {
             </div>
         </div>)
 }
-export default ListAll;
+export default ListAllProcedure;

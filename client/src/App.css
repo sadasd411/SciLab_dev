@@ -1,7 +1,7 @@
 /* replaced the original .App class to remove centering from everything */
 
 .App {
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -109,7 +109,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   color: white;
-  background-color: rgb(70, 70, 71);
+  background-color: rgb(111, 133, 50);
 }
 
 button:disabled,button[disabled]{

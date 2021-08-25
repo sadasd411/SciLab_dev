@@ -1,4 +1,5 @@
 const sciLabController = require('../controllers/experiment.controller')
+const sciLabProcedure = require('../controllers/procedure.controller')
 
 module.exports = (app) => {
     app.get("/",sciLabController.helloworld);

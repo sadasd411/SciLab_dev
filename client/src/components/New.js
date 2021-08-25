@@ -36,7 +36,8 @@ const New = (props) => {
                      <div  className ="divInline">
                         <p className="linkToRight"><Link to ={"/"}>back to home</Link></p>
                     </div>
-                    
+                            
+                    <button className="linkToRight"><Link to ={"/procedure/"}>Add Procedure</Link></button>
                     <form className="divBorder" onSubmit={onSubmitHandler}>
                         <div  className="row">
                         <div className="column left">
@@ -91,7 +92,7 @@ const New = (props) => {
                             </div>
                             </div>
                         <div align="left">
-                            <button type ="submit"><i class="fas fa-upload"></i>Add Pet</button>
+                            <button type ="submit"><i class="fas fa-upload"></i>Add Experiment</button>
                       
                         </div>
 
