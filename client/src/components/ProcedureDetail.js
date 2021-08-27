@@ -1,78 +1,70 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Link, navigate, Navigate } from "@reach/router";
 import axios from "axios";
 import { Editor } from "@tinymce/tinymce-react";
 import path from "path";
 import { nanoid } from "nanoid";
-
-const NewProcedure = (props) => {
+const Update = (props) => {
   const [procedureName, setProcedureName] = useState("");
-  const [procedureDescription, setProcedureDescription] = useState("");
-
+  const [state, setState] = useState("");
   const [errs, setErrs] = useState("");
-  console.log(props);
-  const [state, setState] = useState({ content: "" });
+  const updateRef = useRef();
+  const [update, setForceUpdate] = useState(false);
+  console.log("data", props);
   const handleEditorChange = (e) => {
-    console.log("Content was updated:", e.target.getContent());
+    //console.log("Content was updated:", e.target.getContent());
   };
-  const handleChange = (content, editor) => {
-    setState({ content });
-  };
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const result = await axios.post(`http://localhost:8000/api/procedure`, {
-      procedureName,
-      html: state.content,
+  
+
+ 
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/procedure/" + props.id).then((res) => {
+      console.log(res.data );
+      setProcedureName(res.data.procedureName);
+
+      setState(() => res.data.html);
     });
-
-    try {
-      if (result.data.errors) {
-        console.log(result.data.errors);
-        setErrs(result.data.errors);
-      } else {
-        console.log(result.data);
-        navigate("/");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  }, []);
+  
   return (
     <div>
+      {console.log("stating", state)}
       <div className="divInline">
+        <h1>SciLab</h1>
         <p className="linkToRight">
           <Link to={"/"}>back to home</Link>
         </p>
       </div>
 
-      <form className="divBorder" onSubmit={handleSave}>
+      <form className="divBorder" >
+        <button type="submit" value="refresh" ref={updateRef} onClick={fetch} />
         <div className="row">
           <div className="column left">
             <br />
             <br />
-            <label>procedure Name:</label>
+            <label>Procedure Name:</label>
             <input
               type="text"
+              value={procedureName}
               onChange={(e) => setProcedureName(e.target.value)}
             />
             {errs.procedureName ? (
               <span className="error-text">{errs.procedureName.message}</span>
             ) : null}
             {procedureName.length < 3 && procedureName.length > 0 ? (
-              <span className="error-text">procedureName &gt; 3 </span>
+              <span className="error-text">Procedure Name &gt; 3 </span>
             ) : null}
-
-            {/* <Editor
-                                 apiKey="prczgv0517hxigfrdq39kd1x2ad23k6dc89z0fku3xdsyd9f"
-                                plugins="wordcount"
-                            /> */}
-            <Editor
+            {
+              state === "" ? 
+                <p>Loading</p>
+                : (
+                  <Editor
               id="myTiny_Mce"
               initialValue="<p>Initial content</p>"
               apiKey="au50u78j9vjabzcr4icg4v3oknubu08ifv9rfstawlzmdobp"
               init={{
-                height: "90vh",
+                height: "50vh",
                 menubar: true,
                 selector: "textarea",
                 external_plugins: {
@@ -116,7 +108,13 @@ const NewProcedure = (props) => {
 
                   input.click();
                 },
+                // Often you will want the editor populated with content as soon as it’s initialized. In this case, you can use the setup option in the editor config.
+                //https://www.tiny.cloud/blog/how-to-get-content-and-set-content-in-tinymce/
                 setup: function (editor) {
+                  editor.on('init', function(e){
+                    editor.setContent(state)
+                  })
+                  //
                   editor.ui.registry.addButton("customInsertButton", {
                     icon: "edit-block",
                     tooltip: "Insert Input Element",
@@ -163,20 +161,21 @@ const NewProcedure = (props) => {
                 content_style:
                   "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
               }}
-              value={state.content}
-              onChange={handleEditorChange}
-              onEditorChange={handleChange}
+              value={state}
+             
             />
+                )
+            }
+
+            
           </div>
         </div>
-
-        <div align="left">
-          <button type="submit">
-            <i class="fas fa-upload"></i>Add Procedure
-          </button>
+      
+        <div align="center">
+          <button type="submit">Edit Procedure</button>
         </div>
       </form>
     </div>
   );
 };
-export default NewProcedure;
+export default Update;

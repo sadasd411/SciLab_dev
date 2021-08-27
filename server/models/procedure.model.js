@@ -13,17 +13,17 @@ const ProcedureSchema = new mongoose.Schema(
         html: {
             type: String,
             required: true,
-            get: function (notes) {
-              try {
-                return JSON.parse(notes);
-              } catch (err) {
-                return notes;
-              }
-            },
-            set: function (notes) {
-              return JSON.stringify(notes);
-                },
-              },
+            // // get: function (notes) {
+            // //   try {
+            // //     return JSON.parse(notes);
+            // //   } catch (err) {
+            // //     return notes;
+            // //   }
+            // // },
+            // // set: function (notes) {
+            // //   return JSON.stringify(notes);
+            // //     },
+               },
        },
      {
         timestamps:true,

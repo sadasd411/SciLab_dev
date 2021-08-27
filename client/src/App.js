@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header'
 import List from './components/List'
 import Update from './components/Update'
-import Detail from './components/Details'
+import Detail from './components/ProcedureDetail'
 import New from './components/New';
 import NewProcedure from './components/ProcedureNew'
 import { Router } from '@reach/router';
@@ -20,11 +20,11 @@ function App() {
      <Header></Header>
      
      <Dashboard path = "/"></Dashboard>
-     <ListAllProcedures path = "/ "></ListAllProcedures>
+     <ListAllProcedures path = "/procedures/allProcedures "></ListAllProcedures>
      <Router>
        <NewProcedure path ="/procedure/"></NewProcedure>
-       <List path ="/" />
-       <New path="/experiment/" /> 
+       <List path ="/experiments/allExperiments" />
+       <New path="/experiment/createExpreiment" /> 
        <Detail path ="/experiment/:id"/>  
        <Update path ="/experiment/:id/edit"/> 
        <ProcedureEdit path = "/procedure/:id/edit"></ProcedureEdit>
